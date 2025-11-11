@@ -18,30 +18,35 @@
 <h2>Quick Start</h2>
 <ol>
   <li>Clone & install:
-    <pre><code>git clone &lt;your-repo&gt;
-cd &lt;repo&gt;
-npm install</code></pre>
+    <pre><code>
+      git clone &lt;your-repo&gt;
+      cd &lt;repo&gt;
+      npm install
+    </code></pre>
   </li>
   <li>Set environment:
-    <pre><code>cp .env.example .env
-# edit values (DATABASE_URL, REDIS_URL, NEXT_PUBLIC_API_BASE, etc.)</code></pre>
+    <pre><code>
+      cp .env.example .env
+      # edit values (DATABASE_URL, REDIS_URL, NEXT_PUBLIC_API_BASE, etc.)
+    </code></pre>
   </li>
   <li>Generate Prisma + migrate:
-    <pre><code>npm run prisma:generate
-npm run prisma:migrate</code></pre>
+    <pre><code>
+      npm run prisma:generate
+      npm run prisma:migrate
+    </code></pre>
   </li>
-  <li>Run services (in 2 terminals or use a pm2/dev script):
-    <pre><code># Terminal A (API)
-npm run api:dev
+  <li>Run services:
+    <pre><code>
+      # Terminal A (API)
+      npm run api:dev
+      # Terminal B (Web)
+      npm run web:dev
+      # Terminal C: Worker
+      npm run worker:dev
+    </code></pre>
   </li>
 </ol>
-
-
-# Terminal B (Web)
-npm run web:dev
-
-# Optional: Worker
-npm run worker:dev</code></pre>
 
 <h2>Environment Variables</h2>
 <table>
