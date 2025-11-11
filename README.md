@@ -1,6 +1,6 @@
 <h1>WooCommerce Analytics Dashboard</h1>
 
-<p><b>Next.js</b> • <b>Express API</b> • <b>Prisma</b> • <b>Postgres</b></p>
+<p><b>Next.js</b> • <b>Express API</b> • <b>Prisma</b> • <b>Postgres</b>• <b>Redis</b></p>
 
 <p>This layout syncs WooCommerce data (orders, customers, products, coupons), computes KPIs and segments (RFM), and renders analytics dashboards.</p>
 
