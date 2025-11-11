@@ -1,14 +1,5 @@
 <h1>WooCommerce Analytics Dashboard</h1>
 
-<style>
-  .pill { display:inline-block;padding:.25rem .55rem;border:1px solid #e5e7eb;border-radius:.5rem;background:#fafafa;font-size:.8rem;margin-right:.4rem }
-  code { background:#f6f8fa;padding:.2rem .35rem;border-radius:.35rem }
-  pre { background:#0b1020;color:#e6edf3;padding:1rem;border-radius:.5rem;overflow:auto }
-  h2 { margin-top:1.25rem }
-  table { border-collapse: collapse }
-  th, td { padding:.4rem .6rem;border-bottom:1px solid #eee;text-align:left }
-</style>
-
 <p>
   <span class="pill">Next.js (app)</span>
   <span class="pill">Express API</span>
