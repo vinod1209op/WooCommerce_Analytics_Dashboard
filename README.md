@@ -92,6 +92,3 @@
   <li><b>Worker</b>: Render Cron or background service. Needs <code>DATABASE_URL</code>, <code>REDIS_URL</code>.</li>
   <li><b>Database</b>: Postgres (Render/Railway/Supabase).</li>
 </ul>
-
-<p>MIT License</p>
-Copyright (c)
