@@ -33,14 +33,15 @@ npm run prisma:migrate</code></pre>
   <li>Run services (in 2 terminals or use a pm2/dev script):
     <pre><code># Terminal A (API)
 npm run api:dev
+  </li>
+</ol>
+
 
 # Terminal B (Web)
 npm run web:dev
 
 # Optional: Worker
 npm run worker:dev</code></pre>
-  </li>
-</ol>
 
 <h2>Environment Variables</h2>
 <table>
