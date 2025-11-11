@@ -5,7 +5,7 @@
   code { background:#f6f8fa;padding:.2rem .35rem;border-radius:.35rem }
   pre { background:#0b1020;color:#e6edf3;padding:1rem;border-radius:.5rem;overflow:auto }
   h2 { margin-top:1.25rem }
-  table { border-collapse:collapse }
+  table { border-collapse: collapse }
   th, td { padding:.4rem .6rem;border-bottom:1px solid #eee;text-align:left }
 </style>
 
@@ -17,9 +17,9 @@
   <span class="pill">WooCommerce REST</span>
 </p>
 
-<p>This monorepo syncs WooCommerce data (orders, customers, products, coupons), computes KPIs and segments (RFM), and renders analytics dashboards.</p>
+<p>This layout syncs WooCommerce data (orders, customers, products, coupons), computes KPIs and segments (RFM), and renders analytics dashboards.</p>
 
-<h2>Monorepo Layout</h2>
+<h2>Layout</h2>
 <pre><code>.
 ├─ apps/
 │  ├─ api/        # Express API (KPIs, sales series, segments, RFM, meta)
