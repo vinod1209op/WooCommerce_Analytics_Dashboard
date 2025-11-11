@@ -159,7 +159,7 @@ export default function AnalyticsPage() {
           </div>
         </div>
 
-        {/* Row 1: Revenue / Orders (keep) */}
+        {/* Row 1: Revenue / Orders */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <ChartCard title="Revenue Trend">
             {loading ? <ChartSkeleton /> : (

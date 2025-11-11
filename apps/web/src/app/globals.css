@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Keep the UI clean and bright */
 html, body {
   @apply bg-[#f7f8fb] text-gray-900;
 }

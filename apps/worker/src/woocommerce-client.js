@@ -1,4 +1,3 @@
-// apps/worker/src/woocommerce-client.js
 import axios from 'axios';
 
 export default class WooCommerceClient {
@@ -7,8 +6,7 @@ export default class WooCommerceClient {
     this.baseURL = (store.wooBaseUrl || '').replace(/\/$/, '');
     this.ck = store.wooKey;
     this.cs = store.wooSecret;
-    // prefer query-string auth; many hosts block Basic for Woo endpoints
-    this.authMode = process.env.WC_AUTH_MODE || 'qs'; // 'qs' | 'basic'
+    this.authMode = process.env.WC_AUTH_MODE || 'qs';
   }
 
   // attach auth as query params if in 'qs' mode
@@ -18,7 +16,6 @@ export default class WooCommerceClient {
       : extra;
   }
 
-  // attach Basic auth only when explicitly requested
   basicAuth() {
     return this.authMode === 'basic'
       ? { username: this.ck, password: this.cs }
@@ -112,7 +109,6 @@ export default class WooCommerceClient {
             method: 'GET',
             url: `${this.baseURL}/wp-json/wc/v3/customers`,
             auth: this.basicAuth(),
-            // 🚫 do NOT force orderby here
             params: this.paramsAuth({ per_page, page, ...params }),
             headers: { 'User-Agent': 'WooAnalyticsWorker/1.0' },
         });
@@ -138,8 +134,7 @@ export default class WooCommerceClient {
       return { success: false, error: this.errMsg(error) };
     }
   }
-
-  // Woo Subscriptions plugin routes vary; try several in order
+  
   async getSubscriptions(params = {}) {
     const paths = [
         'wc/v3/subscriptions',

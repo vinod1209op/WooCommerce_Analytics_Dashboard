@@ -78,7 +78,7 @@ export async function appendTopProducts({ storeName, date, products }) {
 
     const key = `${storeName}|${dateStr}|${productName}|${sku}`;
 
-    // Find existing by Key (fast + reliable)
+    // Find existing by Key
     let existing;
     try {
       const res = await notion.databases.query({
@@ -123,7 +123,7 @@ export async function appendTopProducts({ storeName, date, products }) {
       errors++;
     }
 
-    await sleep(150); // be nice to rate limits
+    await sleep(150);
   }
 
   return { ok: errors === 0, created, updated, skipped, errors };

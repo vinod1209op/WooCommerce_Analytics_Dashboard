@@ -1,4 +1,3 @@
-// apps/worker/src/analytics/scoring.js
 import { prisma } from '../../../packages/database/index.js';
 
 // turn value into 1..5 using quantiles
@@ -28,7 +27,7 @@ export async function recomputeCustomerScoresForStore(storeId) {
     orderBy: { created: 'asc' }
   });
 
-  const byCustomer = new Map(); // id -> { totals[], created[] }
+  const byCustomer = new Map();
   for (const o of orders) {
     if (!o.customerId) continue;
     const it = byCustomer.get(o.customerId) || { totals: [], created: [] };
@@ -52,7 +51,6 @@ export async function recomputeCustomerScoresForStore(storeId) {
   const freqScore    = scoreByQuantiles(rows, r => r.frequency);
   const monScore     = scoreByQuantiles(rows, r => r.monetary);
 
-  // Write back
   for (const r of rows) {
     const R = recencyScore(r);
     const F = freqScore(r);

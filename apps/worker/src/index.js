@@ -29,7 +29,6 @@ async function getProductIdByWoo(storeId, wooProductId, fallback) {
   const existing = await findProductByWooOrSku(storeId, wooProductId, sku);
   if (existing) return existing.id;
 
-  // create placeholder if needed
   const created = await prisma.product.create({
     data: {
       storeId,
@@ -55,7 +54,6 @@ async function upsertProductSmart(storeId, p) {
   const existing = await findProductByWooOrSku(storeId, wooId, sku);
 
   if (existing) {
-    // Update existing row (preserve id, attach wooId if missing)
     return prisma.product.update({
       where: { id: existing.id },
       data: {
@@ -105,7 +103,7 @@ async function findCustomerByWooOrEmail(storeId, wooCustomerId, email) {
   return null;
 }
 
-// ==== helpers/customers.js (or keep inline) ====
+// ==== helpers/customers.js ====
 
 function normEmail(v) {
   if (!v || typeof v !== 'string') return null;
@@ -113,7 +111,6 @@ function normEmail(v) {
   return e.length ? e : null;
 }
 
-// merge loser -> winner and delete loser
 async function mergeCustomers({ storeId, winnerId, loserId }) {
   if (!loserId || winnerId === loserId) return winnerId;
 
@@ -151,7 +148,6 @@ async function mergeCustomers({ storeId, winnerId, loserId }) {
   return winnerId;
 }
 
-// ensure there is at most one row for this (storeId,email), merging if needed
 async function ensureSingleByEmail(storeId, email) {
   if (!email) return null;
   const rows = await prisma.customer.findMany({
@@ -218,7 +214,6 @@ export async function getCustomerIdByWoo(storeId, wooCustomerId, fallback) {
     return updated.id;
   }
 
-  // only woo row exists (no email row)
   if (byWoo && !byEmail) {
     try {
       const updated = await prisma.customer.update({
@@ -235,7 +230,6 @@ export async function getCustomerIdByWoo(storeId, wooCustomerId, fallback) {
       });
       return updated.id;
     } catch (e) {
-      // if setting email hit P2002 (someone else has it), merge into that owner
       if (e.code === 'P2002' && email) {
         const owner = await prisma.customer.findFirst({ where: { storeId, email }, select: { id: true } });
         if (owner) {
@@ -248,7 +242,6 @@ export async function getCustomerIdByWoo(storeId, wooCustomerId, fallback) {
     }
   }
 
-  // neither exists -> create (guarded against race)
   try {
     const created = await prisma.customer.create({
       data: {
@@ -265,7 +258,6 @@ export async function getCustomerIdByWoo(storeId, wooCustomerId, fallback) {
     });
     return created.id;
   } catch (e) {
-    // if another concurrent worker already created the email row, just update that
     if (e.code === 'P2002' && email) {
       const owner = await prisma.customer.findFirst({ where: { storeId, email }, select: { id: true } });
       if (owner) {
@@ -507,7 +499,6 @@ class AnalyticsWorker {
 
   let count = 0;
   for (const o of result.data) {
-    // resolve customerId in our DB
     const customerId = await getCustomerIdByWoo(
       store.id,
       o.customer_id,
@@ -532,7 +523,7 @@ class AnalyticsWorker {
       update: {
         created: new Date(o.date_created_gmt || o.date_created),
         total,
-        subtotal: null,            // optionally compute from line_items
+        subtotal: null,
         tax,
         shippingCost,
         discount: discountTotal,
@@ -594,13 +585,12 @@ class AnalyticsWorker {
         usage_limit: cl.usage_limit 
       });
 
-      // adapt to your schema types:
       await prisma.orderCoupon.create({
         data: {
           order:  { connect: { id: order.id } },
           coupon: { connect: { storeId_code: { storeId: store.id, code: cl.code } } },
           discountApplied: Number(cl.discount ?? 0),
-          totalRevenueImpact: Number(cl.discount ?? 0), // ✅ correct spelling
+          totalRevenueImpact: Number(cl.discount ?? 0),
         },
       });
     }
@@ -629,7 +619,7 @@ class AnalyticsWorker {
       });
     }
 
-    // ShippingDetails 1:1
+    // ShippingDetails
     const addr = o.shipping || null;
     const method = (o.shipping_lines?.[0]?.method_title) || null;
     await prisma.shippingDetails.upsert({
@@ -846,7 +836,6 @@ async function testWooCommerceConnection() {
       
       if (test.success) {
         console.log(`✅ WooCommerce connection successful for: ${store.name}`);
-        // Sync data immediately on startup
         await worker.syncStoreData(store);
       } else {
         console.log(`❌ WooCommerce connection failed for: ${store.name}`);

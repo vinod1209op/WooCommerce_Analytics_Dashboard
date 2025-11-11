@@ -1,4 +1,3 @@
-// apps/api/src/webhooks.js
 import crypto from 'crypto';
 import express from 'express';
 import { prisma } from '../../../packages/database/index.js'; 
@@ -14,7 +13,7 @@ router.post('/webhooks/woocommerce', express.raw({ type: '*/*' }), async (req, r
 
     // find store by base URL if you pass it as a header/custom secret, or map by webhook id
     const store = await prisma.store.findFirst({ where: { wooBaseUrl: { contains: baseUrl.replace(/\/$/, '') } } });
-    if (!store) return res.status(200).end(); // ignore unknown
+    if (!store) return res.status(200).end(); 
 
     await prisma.webhookEvent.create({
       data: { storeId: store.id, topic, payloadHash, valid: true, receivedAt: new Date() },
@@ -23,7 +22,7 @@ router.post('/webhooks/woocommerce', express.raw({ type: '*/*' }), async (req, r
     res.status(200).end();
   } catch (e) {
     console.error('Webhook error', e);
-    res.status(200).end(); // ack anyway to avoid retries
+    res.status(200).end();
   }
 });
 

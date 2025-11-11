@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-// Use default export instead of named export
 export default class WooCommerceClient {
   constructor(store) {
     this.store = store;

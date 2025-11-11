@@ -28,7 +28,7 @@ export default function DashboardPage() {
   const [kpis, setKpis] = useState<KPI | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
 
-  // filters (shared pattern)
+  // filters
   const [filter, setFilter] = useState<FilterState>(() => {
     const to = new Date();
     const from = new Date(); from.setDate(from.getDate() - 30);
@@ -44,7 +44,7 @@ export default function DashboardPage() {
     return { start: from, end: to };
   }, [filter.date?.from, filter.date?.to]);
 
-  // load meta (categories/coupons) once
+  // load meta (categories/coupons)
   useEffect(() => {
     if (!hasMounted) return;
     let alive = true;
