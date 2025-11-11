@@ -36,6 +36,7 @@
   </li>
   <li>Generate Prisma + migrate:
     <pre><code>
+      # packages/database
       npm run prisma:generate
       npm run prisma:migrate
     </code></pre>
