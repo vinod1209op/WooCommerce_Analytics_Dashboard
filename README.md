@@ -93,12 +93,5 @@
   <li><b>Database</b>: Postgres (Render/Railway/Supabase).</li>
 </ul>
 
-<h2>Contributing</h2>
-<ol>
-  <li>Fork & branch.</li>
-  <li>Run <code>npm run lint</code>, add tests if applicable.</li>
-  <li>Open PR with a clear description & screenshots.</li>
-</ol>
-
 <h2>License</h2>
 <p>MIT © You</p>
