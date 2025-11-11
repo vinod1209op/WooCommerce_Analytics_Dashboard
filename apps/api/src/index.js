@@ -114,6 +114,7 @@ app.get('/api/stores', async (_req, res) => {
   }
 });
 
+// Stores Endpoint
 app.post('/api/stores', async (req, res) => {
   try {
     const { name, wooBaseUrl, wooKey, wooSecret, webhookSecret } = req.body;
@@ -129,7 +130,7 @@ app.post('/api/stores', async (req, res) => {
   }
 });
 
-// KPIs endpoint (uses aggregates — faster than loading all orders)
+// KPIs endpoint
 app.get('/api/kpis', async (req, res) => {
   try {
     const { storeId, start, end } = req.query;
@@ -140,7 +141,6 @@ app.get('/api/kpis', async (req, res) => {
     if (Number.isNaN(+startDate) || Number.isNaN(+endDate)) {
       return res.status(400).json({ error: 'Invalid start or end date' });
     }
-    // include the full end day
     endDate.setHours(23, 59, 59, 999);
 
     const agg = await prisma.order.aggregate({
@@ -153,7 +153,7 @@ app.get('/api/kpis', async (req, res) => {
     const revenue = agg._sum.total || 0;
     const aov = orders ? revenue / orders : 0;
 
-    // units sold (fast path)
+    // units sold 
     const itemsAgg = await prisma.orderItem.aggregate({
       _sum: { quantity: true },
       where: { order: { storeId, created: { gte: startDate, lte: endDate } } },
@@ -300,7 +300,7 @@ app.get('/api/analytics/segments/summary', async (req, res) => {
     }
 
     // 3) Aggregate by segment
-    const bySegment = new Map(); // segment -> { customers:Set, revenue:number, orders:number }
+    const bySegment = new Map();
     for (const row of ordersAgg) {
       const cid = row.customerId;
       if (cid == null) continue;
@@ -344,7 +344,7 @@ app.get('/api/analytics/rfm/heatmap', async (req, res) => {
       select: { recencyDays: true, frequency: true },
     });
 
-    // Score functions (same as deriveSegment’s R,F parts)
+    // Score functions
     const recencyScore = (days) => (
       days == null ? 3 :
       days <= 30 ? 5 :
@@ -361,7 +361,7 @@ app.get('/api/analytics/rfm/heatmap', async (req, res) => {
     );
 
     // Build 5x5 counts
-    const grid = new Map(); // key "r-f" -> count
+    const grid = new Map();
     for (const r of rows) {
       const rs = recencyScore(r.recencyDays);
       const fs = frequencyScore(r.frequency);
@@ -377,7 +377,6 @@ app.get('/api/analytics/rfm/heatmap', async (req, res) => {
     for (let r = 1; r <= 5; r++) {
       for (let f = 1; f <= 5; f++) {
         const count = grid.get(`${r}-${f}`) || 0;
-        // scale 0..max -> 0..5 (cap 5)
         const score = max ? Math.min(5, Math.round((count / max) * 5)) : 0;
         out.push({ recency: r, frequency: f, count, score });
       }
@@ -407,7 +406,7 @@ app.get('/api/meta/coupons', async (req, res) => {
   }
 });
 
-
+// Notion Endpoint
 app.post('/api/notion/sync', async (req, res) => {
   try {
     const { storeId } = req.body;
