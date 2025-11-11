@@ -93,5 +93,5 @@
   <li><b>Database</b>: Postgres (Render/Railway/Supabase).</li>
 </ul>
 
-MIT License
+<p>MIT License</p>
 Copyright (c)
