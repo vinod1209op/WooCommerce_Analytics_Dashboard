@@ -15,6 +15,10 @@
 └─ .env.example   # Root env example (copy to .env)
 </code></pre>
 
+<h2>Screenshots</h2>
+<img width="1440" height="900" alt="Screen Shot 2025-11-11 at 2 54 38 AM" src="https://github.com/user-attachments/assets/b2e3c831-c403-47d3-9512-ca34b685c345" />
+<img width="1440" height="900" alt="Screen Shot 2025-11-11 at 2 54 56 AM" src="https://github.com/user-attachments/assets/10f6ea72-b687-4e98-984c-147d081cd616" />
+
 <h2>Quick Start</h2>
 <ol>
   <li>Clone & install:
@@ -84,11 +88,3 @@
   npm run web:build
   npm run worker:build
 </code></pre>
-
-<h2>Deploy</h2>
-<ul>
-  <li><b>Web (Next.js)</b>: Vercel. Set <code>NEXT_PUBLIC_API_BASE</code> to your API URL and <code>NEXT_PUBLIC_STORE_ID</code>.</li>
-  <li><b>API</b>: Render / Fly.io / Railway / EC2. Set <code>PORT</code>, <code>DATABASE_URL</code>.</li>
-  <li><b>Worker</b>: Render Cron or background service. Needs <code>DATABASE_URL</code>, <code>REDIS_URL</code>.</li>
-  <li><b>Database</b>: Postgres (Render/Railway/Supabase).</li>
-</ul>
