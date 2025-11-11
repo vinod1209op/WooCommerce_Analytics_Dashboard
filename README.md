@@ -69,22 +69,19 @@
 
 <h2>Core Commands</h2>
 <pre><code># Prisma
-npm run prisma:generate
-npm run prisma:migrate
-
-# Lint/Format
-npm run lint
-npm run format
-
-# Dev
-npm run api:dev
-npm run web:dev
-npm run worker:dev
-
-# Build
-npm run api:build
-npm run web:build
-npm run worker:build
+  npm run prisma:generate
+  npm run prisma:migrate
+  # Lint/Format
+  npm run lint
+  npm run format
+  # Dev
+  npm run api:dev
+  npm run web:dev
+  npm run worker:dev
+  # Build
+  npm run api:build
+  npm run web:build
+  npm run worker:build
 </code></pre>
 
 <h2>Deploy</h2>
