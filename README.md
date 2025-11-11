@@ -68,7 +68,8 @@
 </ol>
 
 <h2>Core Commands</h2>
-<pre><code># Prisma
+<pre><code>
+  # Prisma
   npm run prisma:generate
   npm run prisma:migrate
   # Lint/Format
